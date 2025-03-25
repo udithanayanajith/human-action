@@ -12,16 +12,12 @@ data_dir = "collected_data"
 if not os.path.exists(data_dir):
     os.makedirs(data_dir)
 
-actions = ["run","throw"]
+actions = ["catch"]
 for action in actions:
     if not os.path.exists(os.path.join(data_dir, action)):
         os.makedirs(os.path.join(data_dir, action))
 
 cap = cv2.VideoCapture(0)
-
-if cap.isOpened():
-    zoom_level = 100
-    cap.set(cv2.CAP_PROP_ZOOM, zoom_level)
 
 def extract_keypoints(results):
     if results.pose_landmarks:
@@ -35,7 +31,6 @@ frame_index = 0
 keypoints_data = []
 collecting = False
 
-# Custom drawing specifications
 landmark_drawing_spec = mp_drawing.DrawingSpec(color=(0, 255, 0), thickness=3, circle_radius=5)
 connection_drawing_spec = mp_drawing.DrawingSpec(color=(255, 0, 0), thickness=4)
 
@@ -45,20 +40,13 @@ while cap.isOpened():
         break
 
     frame = cv2.flip(frame, 1)
-    height, width = frame.shape[:2]
-    zoom_factor = 1.5
-    new_height, new_width = int(height / zoom_factor), int(width / zoom_factor)
-    start_x, start_y = (width - new_width) // 2, (height - new_height) // 2
-    cropped_frame = frame[start_y:start_y + new_height, start_x:start_x + new_width]
-    resized_frame = cv2.resize(cropped_frame, (width, height))
-
-    frame_rgb = cv2.cvtColor(resized_frame, cv2.COLOR_BGR2RGB)
+    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     results = pose.process(frame_rgb)
 
-    black_background = np.zeros((height, width, 3), dtype=np.uint8)
+    black_background = np.zeros(frame.shape, dtype=np.uint8)
     if results.pose_landmarks:
         mp_drawing.draw_landmarks(
-            resized_frame,
+            frame,
             results.pose_landmarks,
             mp_pose.POSE_CONNECTIONS,
             landmark_drawing_spec=landmark_drawing_spec,
@@ -87,10 +75,10 @@ while cap.isOpened():
                 action_index = (action_index + 1) % len(actions)
                 sequence_index = 0
 
-    cv2.putText(resized_frame, f"Action: {actions[action_index]}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+    cv2.putText(frame, f"Action: {actions[action_index]}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
     if collecting:
-        cv2.putText(resized_frame, "Collecting...", (10, 70), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-    cv2.imshow("Data Collection", resized_frame)
+        cv2.putText(frame, "Collecting...", (10, 70), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+    cv2.imshow("Data Collection", frame)
     cv2.imshow("Skeleton", black_background)
 
     key = cv2.waitKey(1)
