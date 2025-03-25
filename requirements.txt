@@ -1,0 +1,9 @@
+Flask==3.0.3
+Flask-Cors==5.0.0
+mediapipe==0.9.1.0
+numpy==1.26.4
+opencv-contrib-python==4.10.0.84
+opencv-python==4.10.0.84
+opencv-python-headless==4.10.0.84
+torch==2.4.1+cpu
+torchvision==0.19.1+cpu
