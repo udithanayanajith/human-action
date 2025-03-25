@@ -153,7 +153,7 @@ def predict():
     predicted_action = int_to_label[predicted_label]
     
     if predicted_action != actual_class:
-        score = 0  
+        score = 1 
     else:
         score = probabilities[0][predicted_label].item() * 100
     
