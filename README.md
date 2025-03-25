@@ -1,5 +1,3 @@
-  Action Recognition System body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; color: #333; } h1, h2, h3 { color: #2c3e50; } h1 { border-bottom: 2px solid #3498db; padding-bottom: 10px; } h2 { border-bottom: 1px solid #eee; padding-bottom: 5px; } code { background-color: #f5f5f5; padding: 2px 5px; border-radius: 3px; font-family: monospace; } pre { background-color: #f5f5f5; padding: 10px; border-radius: 5px; overflow-x: auto; } .highlight { background-color: #fffde7; padding: 15px; border-left: 4px solid #ffd600; margin: 20px 0; } table { border-collapse: collapse; width: 100%; margin: 20px 0; } th, td { border: 1px solid #ddd; padding: 8px; text-align: left; } th { background-color: #f2f2f2; }
-
 Action Recognition System
 =========================
 
